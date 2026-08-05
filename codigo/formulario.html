@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #6c4ab6 0%, #8b5fbf 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        color: #4a2e7a;
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+
+      p.subtitle {
+        color: #888;
+        margin-bottom: 28px;
+        font-size: 14px;
+      }
+
+      label {
+        display: block;
+        color: #4a2e7a;
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .campo {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 2px solid #e5e0f0;
+        border-radius: 10px;
+        font-size: 15px;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: #6c4ab6;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        background: #c4b8de;
+        cursor: not-allowed;
+      }
+
+      #mensaje {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 14px;
+        display: none;
+      }
+
+      #mensaje.exito {
+        color: #2e7d32;
+        display: block;
+      }
+
+      #mensaje.error {
+        color: #c62828;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h1>💬 Feedback Alegra</h1>
+      <p class="subtitle">Tu opinión nos ayuda a mejorar nuestros productos</p>
+
+      <form id="formFeedback">
+        <div class="campo">
+          <label>Nombre (opcional)</label>
+          <input type="text" id="nombre" placeholder="Tu nombre" />
+        </div>
+
+        <div class="campo">
+          <label>Producto *</label>
+          <select id="producto" required>
+            <option value="">Selecciona un producto</option>
+            <option value="Alegra POS">Alegra POS</option>
+            <option value="Alegra Contabilidad">Alegra Contabilidad</option>
+            <option value="Alegra Nómina">Alegra Nómina</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Tu comentario *</label>
+          <textarea
+            id="comentario"
+            placeholder="Cuéntanos tu experiencia..."
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" id="btnEnviar">Enviar feedback</button>
+        <div id="mensaje"></div>
+      </form>
+    </div>
+  </body>
+</html>
+
+<script>
+  document
+    .getElementById("formFeedback")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const btn = document.getElementById("btnEnviar");
+      const mensaje = document.getElementById("mensaje");
+
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+      mensaje.className = "";
+      mensaje.style.display = "none";
+
+      const datos = {
+        nombre: document.getElementById("nombre").value,
+        producto: document.getElementById("producto").value,
+        comentario: document.getElementById("comentario").value,
+      };
+
+      google.script.run
+        .withSuccessHandler(function () {
+          mensaje.textContent = "✅ ¡Gracias por tu feedback!";
+          mensaje.className = "exito";
+          document.getElementById("formFeedback").reset();
+          btn.disabled = false;
+          btn.textContent = "Enviar feedback";
+        })
+        .withFailureHandler(function (error) {
+          mensaje.textContent = "❌ Hubo un error. Intenta de nuevo.";
+          mensaje.className = "error";
+          btn.disabled = false;
+          btn.textContent = "Enviar feedback";
+        })
+        .guardarFeedback(datos);
+    });
+</script>
