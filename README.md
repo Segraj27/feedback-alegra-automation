@@ -1,6 +1,8 @@
-# Feedback Alegra Automation
+# 🚀 Plataforma de Clasificación de Feedback con IA
 
-## Descripción
+### Reto Técnico – Automation Support Intern (Aprendiz SENA)
+
+Sistema desarrollado para automatizar la captura, clasificación y visualización de feedback de usuarios utilizando Google Apps Script, Google Sheets, Gemini AI y Looker Studio.
 
 Este proyecto fue desarrollado como solución al reto técnico para el cargo de Automation Support Intern.
 
@@ -8,16 +10,14 @@ La solución automatiza la recolección y clasificación de comentarios de usuar
 
 ---
 
-## Tecnologías utilizadas
+## 🛠️ Tecnologías utilizadas
 
-- Google Apps Script
-- HTML5
-- JavaScript
-- Google Sheets
-- Gemini AI API
-- Looker Studio
-
----
+- **Google Apps Script** – Lógica del servidor y automatización.
+- **HTML5** – Interfaz del formulario de captura.
+- **JavaScript** – Validaciones y comunicación entre componentes.
+- **Google Sheets** – Almacenamiento de la información recopilada.
+- **Gemini AI API** – Clasificación de sentimientos y generación de resúmenes.
+- **Looker Studio** – Visualización de métricas mediante un dashboard interactivo.
 
 ## Componentes del proyecto
 
